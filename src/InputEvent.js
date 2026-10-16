@@ -2,83 +2,136 @@
 // 비밀번호
 // 나이
 // 주소
-// 이메일을 입력받기
-// 전부 입력 완료 되었을 때 확인 버튼 누르면 입력 받은 결과를 출력하기
+// 이메일을 입력 받기
+// 전부 입력 완료 되었을 때 확인 버튼 누르면 입력 받은 결과를 출력 하기
 
 import { useState } from "react";
 
 const InputEvent = () => {
+  // 입력값마다 useState() 선언
   const [name, setName] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
-  const [addr, setAddr] = useState("");
+  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
 
+  // 확인 버튼을 눌렀을 때 결과 출력
   const [result, setResult] = useState(null);
 
-  const handleConfirm = () => {
-    // 👈 빈 칸이 하나라도 있는지 체크하는 유효성 검사 추가!
-    if (!name || !pwd || !age || !addr || !email) {
-      alert("모든 정보를 입력해 주세요!");
+  // 입력값마다 onChange 핸들러 따로 작성, 장점: 나중에 입력값 검증이나 추가 로직을 넣을 때 함수 안쪽만 수정하면 되므로 확장성이 좋습니다.
+  const onChangeName = (e) => setName(e.target.value);
+  const onChangePassword = (e) => setPassword(e.target.value);
+  const onChangeAge = (e) => setAge(e.target.value);
+  const onChangeAddress = (e) => setAddress(e.target.value);
+  const onChangeEmail = (e) => setEmail(e.target.value);
+
+  // 모든 값이 입력되었는지 확인 (공백만 입력한 경우도 미입력 처리)
+  const isAllFilled =
+    name.trim() !== "" &&
+    password.trim() !== "" &&
+    age.trim() !== "" &&
+    address.trim() !== "" &&
+    email.trim() !== "";
+
+  // 확인 버튼 클릭
+  const onSubmit = (e) => {
+    e.preventDefault(); // 폼 제출 시 새로 고침 방지
+
+    if (!isAllFilled) {
+      alert("모든 항목을 입력 해주세요.");
       return;
     }
-    setResult({ name, pwd, age, addr, email });
+
+    // 확인을 누른 시점의 값을 저장
+    setResult({ name, password, age, address, email });
+  };
+
+  // 초기화 버튼 클릭
+  const onReset = () => {
+    setName("");
+    setPassword("");
+    setAge("");
+    setAddress("");
+    setEmail("");
+    setResult(null);
   };
 
   return (
     <>
-      <p>입력 연습</p>
-      <div>
-        <input
-          type="text"
-          placeholder="이름 입력"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          placeholder="비밀번호 입력"
-          value={pwd}
-          onChange={(e) => setPwd(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="number"
-          placeholder="나이 입력"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          placeholder="주소 입력"
-          value={addr}
-          onChange={(e) => setAddr(e.target.value)}
-        />
-      </div>
-      <div>
-        <input
-          type="email"
-          placeholder="메일 입력"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
+      <p>입력 연습 (각각의 useState)</p>
 
-      <button onClick={handleConfirm}>확인</button>
+      <form onSubmit={onSubmit}>
+        {" "}
+        {/*장점: 웹 표준에 더 부합하며, 사용자가 입력창에서 키보드의 Enter 키를 쳤을 때도 자동으로 확인 버튼이 눌리는 효과가 있어서 편리합니다. */}
+        <div>
+          <label>
+            이름 :{" "}
+            <input value={name} onChange={onChangeName} placeholder="이름" />
+          </label>
+        </div>
+        <div>
+          <label>
+            비밀번호 :{" "}
+            <input
+              type="password"
+              value={password}
+              onChange={onChangePassword}
+              placeholder="비밀번호"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            나이 :{" "}
+            <input
+              type="number"
+              value={age}
+              onChange={onChangeAge}
+              placeholder="나이"
+              min="0"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            주소 :{" "}
+            <input
+              value={address}
+              onChange={onChangeAddress}
+              placeholder="주소"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            이메일 :{" "}
+            <input
+              type="email"
+              value={email}
+              onChange={onChangeEmail}
+              placeholder="example@email.com"
+            />
+          </label>
+        </div>
+        {/* 전부 입력해야 확인 버튼 활성화, 장점: 사용자가 애초에 빈 칸으로 버튼을 누를 수 없게 막아주기 때문에 사용자 경험(UX) 측면에서 훨씬 친절하고 안전합니다. */}
+        <button type="submit" disabled={!isAllFilled}>
+          확인
+        </button>
+        <button type="button" onClick={onReset}>
+          초기화
+        </button>
+      </form>
 
+      {/* 결과 출력 */}
       {result && (
         <div>
-          <h3>입력 결과 출력</h3>
-          <p>이름: {result.name}</p>
-          <p>비밀번호: {result.pwd}</p>
-          <p>나이: {result.age}</p>
-          <p>주소: {result.addr}</p>
-          <p>이메일: {result.email}</p>
+          <h3>입력 결과</h3>
+          <p>이름 : {result.name}</p>
+          <p>비밀번호 : {"*".repeat(result.password.length)}</p>{" "}
+          {/*결과 화면에서 비밀번호를 그대로 보여주지 않고 글자 수만큼 별표(*)로 바꿔주는 센스*/}
+          <p>나이 : {result.age}</p>
+          <p>주소 : {result.address}</p>
+          <p>이메일 : {result.email}</p>
         </div>
       )}
     </>
