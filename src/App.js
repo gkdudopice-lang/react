@@ -1,9 +1,9 @@
 import "./App.css";
 
-import InputEvent from "./InputEvent";
+import Table from "./Table";
 
 function App() {
-  return <InputEvent />;
+  return <Table />;
   // 화면을 그려주는 구간
 }
 
