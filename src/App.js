@@ -1,10 +1,8 @@
-import "./App.css";
-
-import Table from "./Table";
+import React from "react";
+import ToDoSample from "./ToDoSample";
 
 function App() {
-  return <Table />;
-  // 화면을 그려주는 구간
+  return <ToDoSample />;
 }
 
 export default App;

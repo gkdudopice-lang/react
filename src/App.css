@@ -45,3 +45,47 @@ th,
 td {
   border: 1px solid #ccc;
 }
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f6f9;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+input {
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+input:focus {
+  border-color: #61dafb;
+}
+
+button {
+  padding: 6px 8px;
+  background-color: aquamarine;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background-color: aqua;
+}
+
+ul {
+  width: 150px;
+  height: 500px;
+}
+
+li {
+  padding: 10px 13px;
+  cursor: pointer;
+}
+li:hover {
+  background-color: #d3f8e9; /* 마우스 올렸을 때 연한 빨간색 (삭제 힌트) */
+}
