@@ -1,8 +1,9 @@
 import React from "react";
-import ToDoSample from "./ToDoSample";
+
+import Average from "./Average";
 
 function App() {
-  return <ToDoSample />;
+  return <Average />;
 }
 
 export default App;
